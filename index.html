@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Aadhya</title>
+    <style>
+        body{
+            background-color:aqua;
+        }
+        h1{
+            color:red;
+            font-size: 50px;
+        }
+    </style>
+    <link rel="icon" href="logo.png" type="images/x-icon">
+</head>
+<body>
+    <h1>Happy 5<sup>th</sup> Birthday Aadhya!!!</h1>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script>
+    <script>
+        function setup(){
+            createCanvas(1000, 500)
+        }
+        let b=[[250, 250, 0]]
+        let f=[]
+        for(let i=0;i<15;i++){
+            f.push([Math.random()*1000, Math.random()*50+70])
+        }
+        function butterfly(b2){
+            push()
+            translate(b2[0], b2[1])
+            ellipse(5, -7, 20, 17)
+            ellipse(5, 1, 15, 15)
+            ellipse(-5, -7, 20, 17)
+            ellipse(-5, 1, 15, 15)
+            fill(40, 130, 255)
+            ellipse(0, -4, 12, 25)
+            if((Math.abs(b2[0]-f[b2[2]][0])<20) && (Math.abs(b2[1]-(500-f[b2[2]][1]))<20)){
+                b2[2]=Math.floor(Math.random()*f.length)
+                if(Math.random()>0.9 && b.length<10){
+                    b.push([...b2])
+                }
+            }else{
+                if(b2[0]>f[b2[2]][0]){
+                    b2[0]--;
+                }else{
+                    b2[0]++;
+                }
+
+                if(b2[1]>(500-f[b2[2]][1])){
+                    b2[1]--;
+                }else{
+                    b2[1]++;
+                }
+                b2[0]+=Math.random()*2-1
+                b2[1]+=Math.random()*2-1
+            }
+            pop()
+        }
+        function draw(){
+            background(0, 255, 255)
+            for( let i=0;i<f.length;i++){
+                stroke(157, 240, 10)
+                strokeWeight(7)
+                line(f[i][0], 500-f[i][1], f[i][0], 500)
+                noStroke()
+                fill(167, 240, 10)
+                ellipse(f[i][0]-10, 500-f[i][1], 20)
+                ellipse(f[i][0]+10, 500-f[i][1], 20)
+                ellipse(f[i][0], 500-f[i][1]-10, 20)
+                ellipse(f[i][0], 500-f[i][1]+10, 20)
+                fill(255, 255, 0)
+                ellipse(f[i][0], 500-f[i][1], 20)
+            }
+            fill(127, 255, 0)
+            rect(0, 450, 1000, 50)
+            fill(0, 100, 255)
+            
+            for(let i=0;i<b.length;i++){
+                butterfly(b[i])
+            }
+        }
+        function mouseClicked(){
+            f.push([mouseX, 500-mouseY])
+        }
+    </script>
+</body>
+</html>
